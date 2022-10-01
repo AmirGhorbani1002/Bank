@@ -27,4 +27,6 @@ public class BaseEntity {
         updateDate = LocalDateTime.now();
     }
 
+    public Boolean isNow(){return id == null;}
+
 }
