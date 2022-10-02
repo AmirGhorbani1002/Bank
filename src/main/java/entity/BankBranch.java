@@ -8,6 +8,7 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,8 +19,8 @@ public class BankBranch extends BaseEntity {
     private String name;
     private Integer code;
     @ManyToMany(mappedBy = "bankBranch",cascade = CascadeType.ALL)
-    private Set<Customer> customers ;
+    private Set<Customer> customers = new HashSet<>();
     @OneToMany(mappedBy = "bankBranch",cascade = CascadeType.ALL)
-    private Set<Employee> employees ;
+    private Set<Employee> employees = new HashSet<>();
 
 }

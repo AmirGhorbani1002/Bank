@@ -34,7 +34,6 @@ public interface BaseRepository<E extends BaseEntity> {
 
     default Optional<E> loadById(Long id) {
         E existEntity = null;
-        EntityTransaction transaction = null;
         try {
             EntityManager em = HibernateUtil
                     .getEntityManagerFactory()
@@ -48,7 +47,6 @@ public interface BaseRepository<E extends BaseEntity> {
 
     default Optional<List<E>> loadAll() {
         List<E> existEntities = null;
-        EntityTransaction transaction = null;
         try {
             EntityManager em = HibernateUtil
                     .getEntityManagerFactory()

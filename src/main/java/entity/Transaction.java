@@ -3,6 +3,7 @@ package entity;
 import base.BaseEntity;
 import exception.NegativeException;
 import exception.NotEnoughException;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
@@ -13,13 +14,13 @@ import lombok.Setter;
 @Setter
 public class Transaction extends BaseEntity {
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Account originAccount;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Account destinationAccount;
     private Double amount;
 
-    public void deposit() {
+    public void deposit() { //ToDo: کارمزد
         checkAmount();
         destinationAccount
                 .getCreditCard()
