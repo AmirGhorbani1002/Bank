@@ -1,33 +1,22 @@
 package service;
 
+import base.BaseRepository;
+import base.BaseService;
 import entity.Customer;
 import repository.CustomerRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CustomerService {
+public class CustomerService implements BaseService<Customer> {
 
-    CustomerRepository customerRepository = new CustomerRepository();
-
-    public void saveOrUpdate(Customer customer) {
-        customerRepository.saveOrUpdate(customer);
-    }
-
-    public Optional<Customer> loadById(Long id) {
-        return customerRepository.loadById(id);
-    }
-
-    public Optional<List<Customer>> loadAll() {
-        return customerRepository.loadAll();
-    }
-
-    public void delete(Customer customer) {
-        customerRepository.delete(customer);
+    @Override
+    public BaseRepository<Customer> getRepository() {
+        return new CustomerRepository();
     }
 
     public Optional<Customer> loadByUsername(String nationalCode, String password) {
-        return customerRepository.loadByUsername(nationalCode, password);
+        return ((CustomerRepository) getRepository()).loadByUsername(nationalCode, password);
     }
 
 }

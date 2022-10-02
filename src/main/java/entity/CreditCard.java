@@ -10,7 +10,6 @@ import java.util.Random;
 
 @Entity
 @Getter
-@Setter
 public class CreditCard extends BaseEntity {
 
     private String number;
@@ -51,4 +50,15 @@ public class CreditCard extends BaseEntity {
         return LocalDate.now().plusYears(5);
     }
 
+    public void setExpired(LocalDate expired) {
+        this.expired = expired;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
 }

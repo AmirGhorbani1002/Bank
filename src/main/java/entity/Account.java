@@ -4,12 +4,12 @@ import base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Random;
 
 @Entity
 @Getter
-@Setter
 public class Account extends BaseEntity {
 
     private String number;
@@ -37,4 +37,19 @@ public class Account extends BaseEntity {
                 .toString();
     }
 
+    public void setBlocked(Boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
 }
