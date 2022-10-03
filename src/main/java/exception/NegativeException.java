@@ -1,6 +1,6 @@
 package exception;
 
-public class NegativeException extends RuntimeException{
+public class NegativeException extends Exception{
 
     public NegativeException() {
         super("Amount can't be negative");

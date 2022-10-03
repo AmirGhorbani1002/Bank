@@ -4,12 +4,14 @@ import base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Random;
 
 @Entity
 @Getter
+@ToString
 public class CreditCard extends BaseEntity {
 
     private String number;
@@ -18,6 +20,7 @@ public class CreditCard extends BaseEntity {
     private LocalDate expired;
     @OneToOne
     @MapsId
+    @ToString.Exclude
     private Account account;
 
     public CreditCard() {

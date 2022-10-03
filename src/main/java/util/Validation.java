@@ -1,6 +1,7 @@
-package menu;
+package util;
 
 import entity.Customer;
+import menu.CustomerMenu;
 import service.CustomerService;
 
 import java.util.Objects;

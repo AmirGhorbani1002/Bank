@@ -3,23 +3,25 @@ package entity;
 import base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Random;
 
 @Entity
 @Getter
+@ToString
 public class Account extends BaseEntity {
 
     private String number;
     private Boolean blocked;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @ToString.Exclude
     private Customer customer;
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private CreditCard creditCard;
     @OneToOne
     @Transient
+    @ToString.Exclude
     private Transaction transaction;
 
     public Account() {

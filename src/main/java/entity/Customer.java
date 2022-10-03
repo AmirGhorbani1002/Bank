@@ -19,7 +19,7 @@ public class Customer extends Person{
 
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private Set<Account> accounts = new HashSet<>();
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private Set<BankBranch> bankBranch = new HashSet<>();
 
 
