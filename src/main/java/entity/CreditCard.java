@@ -18,6 +18,7 @@ public class CreditCard extends BaseEntity {
     private Double amount;
     private Integer cvv2;
     private LocalDate expired;
+    private String password;
     @OneToOne
     @MapsId
     @ToString.Exclude
@@ -63,5 +64,9 @@ public class CreditCard extends BaseEntity {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

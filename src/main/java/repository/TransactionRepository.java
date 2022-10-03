@@ -15,18 +15,21 @@ public class TransactionRepository implements BaseRepository<Transaction> {
         return Transaction.class;
     }
 
-    public Optional<List<Transaction>> loadAllByDate(Long accountNumber) {
+    public Optional<List<Transaction>> loadAllByDate(String accountNumber) {
         List<Transaction> existEntities = null;
         try {
             EntityManager em = HibernateUtil
                     .getEntityManagerFactory()
                     .createEntityManager();
             String hql = """
-                    from Transaction t select t where t.originAccount =: input or t.destinationAccount =: input
+                    select t
+                    from Transaction t, Account a
+                    where t.originAccount = a.id
                     """;
             TypedQuery<Transaction> typedQuery = em
-                    .createQuery(hql, getEntityClass())
-                    .setParameter("input", accountNumber);
+                    .createQuery(hql, getEntityClass());
+                    //.setParameter("input1", 1)
+                    //.setParameter("input2", 1);
             existEntities = typedQuery.getResultList();
         } catch (Exception e) {
             System.out.println(e.getMessage());

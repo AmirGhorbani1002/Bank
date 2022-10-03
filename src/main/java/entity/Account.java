@@ -13,7 +13,7 @@ import java.util.Random;
 public class Account extends BaseEntity {
 
     private String number;
-    private Boolean blocked;
+    private Integer wrongPassword;
     @ManyToOne
     @ToString.Exclude
     private Customer customer;
@@ -26,7 +26,7 @@ public class Account extends BaseEntity {
 
     public Account() {
         this.number = "7008" + createRandomAccountNumber();
-        this.blocked = false;
+        this.wrongPassword = 0;
         this.creditCard = new CreditCard();
         this.creditCard.setAccount(this);
     }
@@ -39,8 +39,8 @@ public class Account extends BaseEntity {
                 .toString();
     }
 
-    public void setBlocked(Boolean blocked) {
-        this.blocked = blocked;
+    public void setWrongPassword(Integer wrongPassword) {
+        this.wrongPassword = wrongPassword;
     }
 
     public void setCustomer(Customer customer) {

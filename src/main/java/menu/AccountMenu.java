@@ -21,7 +21,9 @@ public class AccountMenu {
                 customer.getAccounts().forEach(System.out::println);
             } else if(Objects.equals(input, "2")){
                 TransactionService transactionService = new TransactionService();
-                transactionService.loadAllByDate(1L); //ToDo: fix date and which account
+                System.out.print("Enter your account number: ");
+                String number = scanner.next();
+                System.out.println(transactionService.loadAllByDate(number));//ToDO: date
             }  else if(Objects.equals(input, "3")){
                 break;
             }

@@ -19,7 +19,6 @@ public class CustomerMenu {
     public void showMenu(Customer customer) {
 
         System.out.println("Welcome " + customer.getFirstname() + " " + customer.getLastname());
-
         if (customer.getAccounts().size() == 0) {
             while (true) {
                 System.out.println("You dont have an account yet. Please open an account first");
@@ -30,6 +29,7 @@ public class CustomerMenu {
                 String input = scanner.next();
                 if (Objects.equals(input, "1")) {
                     openAccount(customer);
+                    break;
                 } else if (Objects.equals(input, "3")) {
                     break;
                 }

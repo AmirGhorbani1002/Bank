@@ -9,6 +9,7 @@ import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -63,4 +64,12 @@ public class Transaction extends BaseEntity {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "originAccount=" + originAccount.getNumber() +
+                ", destinationAccount=" + destinationAccount.getNumber() +
+                ", amount=" + amount +
+                '}';
+    }
 }

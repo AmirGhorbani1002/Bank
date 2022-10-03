@@ -14,8 +14,8 @@ public class TransactionService implements BaseService<Transaction> {
         return new TransactionRepository();
     }
 
-    public Optional<List<Transaction>> loadAllByDate(Long number) {
-        return ((TransactionRepository) getRepository()).loadAllByDate(number);
+    public Optional<List<Transaction>> loadAllByDate(String accountNumber) {
+        return ((TransactionRepository) getRepository()).loadAllByDate(accountNumber);
     }
 
 }

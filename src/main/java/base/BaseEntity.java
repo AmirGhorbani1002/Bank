@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,19 +14,21 @@ public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+    private LocalDate createDate;
+    private LocalDate updateDate;
 
     @PrePersist
-    private void whenCreate(){
-        createDate = LocalDateTime.now();
+    private void whenCreate() {
+        createDate = LocalDate.now();
     }
 
     @PreUpdate
-    public void whenUpdate(){
-        updateDate = LocalDateTime.now();
+    public void whenUpdate() {
+        updateDate = LocalDate.now();
     }
 
-    public Boolean isNow(){return id == null;}
+    public Boolean isNow() {
+        return id == null;
+    }
 
 }
