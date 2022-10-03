@@ -18,6 +18,7 @@ public class CreditCard extends BaseEntity {
     private Double amount;
     private Integer cvv2;
     private LocalDate expired;
+    @ToString.Exclude
     private String password;
     @OneToOne
     @MapsId

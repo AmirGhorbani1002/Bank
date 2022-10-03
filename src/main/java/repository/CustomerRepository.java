@@ -27,7 +27,8 @@ public class CustomerRepository implements BaseRepository<Customer> {
                     .setParameter("inputP", password)
                     .getSingleResult();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            return Optional.empty();
         }
         return Optional.ofNullable(customer);
     }

@@ -3,6 +3,7 @@ package menu;
 import entity.Customer;
 import service.TransactionService;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -10,24 +11,47 @@ public class AccountMenu {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public void showMenu(Customer customer){
+    public void showMenu(Customer customer) {
 
-        while (true){
+        while (true) {
             System.out.println("1- Show my accounts");
             System.out.println("2- Show my transactions");
             System.out.println("3- Exit");
             String input = scanner.next();
-            if(Objects.equals(input, "1")){
+            if (Objects.equals(input, "1")) {
                 customer.getAccounts().forEach(System.out::println);
-            } else if(Objects.equals(input, "2")){
+            } else if (Objects.equals(input, "2")) {
+                String number = getAccount(customer);
+                System.out.print("Enter date: ");
+                LocalDate localDate;
+                while (true) {
+                    try {
+                        localDate = LocalDate.parse(scanner.next());
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("Wrong date input. try again");
+                    }
+                }
                 TransactionService transactionService = new TransactionService();
-                System.out.print("Enter your account number: ");
-                String number = scanner.next();
-                System.out.println(transactionService.loadAllByDate(number));//ToDO: date
-            }  else if(Objects.equals(input, "3")){
+                //ToDO: date
+                transactionService.loadAllByDate(number, localDate).ifPresent(transactions -> {
+                    if (transactions.size() == 0) {
+                        System.out.println("Nothing found for this account number and date");
+                        return;
+                    }
+                    transactions.forEach(System.out::println);
+                });
+            } else if (Objects.equals(input, "3")) {
                 break;
             }
         }
+    }
+
+    private String getAccount(Customer customer) {
+        System.out.println("You have this/these account/accounts. select one of them");
+        customer.getAccounts().forEach(System.out::println);
+        System.out.print("Enter account number: ");
+        return scanner.next();
     }
 
 }

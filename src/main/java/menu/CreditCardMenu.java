@@ -79,10 +79,13 @@ public class CreditCardMenu {
         System.out.print("Enter the amount you want to deposit to your card");
         Double amount = scanner.nextDouble();
         Transaction transaction = new Transaction(account, account, amount);
-        try {
-            transaction.selfDeposit();
-        } catch (NegativeException e) {
-            System.out.println(e.getMessage());
+        while (true){
+            try {
+                transaction.selfDeposit();
+                break;
+            } catch (NegativeException e) {
+                System.out.println(e.getMessage());
+            }
         }
         TransactionService transactionService = new TransactionService();
         CreditCardService creditCardService = new CreditCardService();

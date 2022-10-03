@@ -40,7 +40,7 @@ public interface BaseRepository<E extends BaseEntity> {
                     .createEntityManager();
             existEntity = em.find(getEntityClass(), id);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return Optional.empty();
         }
         return Optional.ofNullable(existEntity);
     }
@@ -55,7 +55,7 @@ public interface BaseRepository<E extends BaseEntity> {
             TypedQuery<E> typedQuery = em.createQuery(hql, getEntityClass());
             existEntities = typedQuery.getResultList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return Optional.empty();
         }
         return Optional.ofNullable(existEntities);
     }

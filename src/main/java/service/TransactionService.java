@@ -5,6 +5,7 @@ import base.BaseService;
 import entity.Transaction;
 import repository.TransactionRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +15,8 @@ public class TransactionService implements BaseService<Transaction> {
         return new TransactionRepository();
     }
 
-    public Optional<List<Transaction>> loadAllByDate(String accountNumber) {
-        return ((TransactionRepository) getRepository()).loadAllByDate(accountNumber);
+    public Optional<List<Transaction>> loadAllByDate(String accountNumber, LocalDate localDate) {
+        return ((TransactionRepository) getRepository()).loadAllByDate(accountNumber, localDate);
     }
 
 }

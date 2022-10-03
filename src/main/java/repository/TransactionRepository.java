@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import util.HibernateUtil;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +16,8 @@ public class TransactionRepository implements BaseRepository<Transaction> {
         return Transaction.class;
     }
 
-    public Optional<List<Transaction>> loadAllByDate(String accountNumber) {
-        List<Transaction> existEntities = null;
+    public Optional<List<Transaction>> loadAllByDate(String accountNumber, LocalDate localDate) {
+        List<Transaction> existEntities;
         try {
             EntityManager em = HibernateUtil
                     .getEntityManagerFactory()
@@ -24,15 +25,16 @@ public class TransactionRepository implements BaseRepository<Transaction> {
             String hql = """
                     select t
                     from Transaction t, Account a
-                    where t.originAccount = a.id
+                    where a.number =: input and t.createDate between :input2 and :input3
                     """;
             TypedQuery<Transaction> typedQuery = em
-                    .createQuery(hql, getEntityClass());
-                    //.setParameter("input1", 1)
-                    //.setParameter("input2", 1);
+                    .createQuery(hql, getEntityClass())
+                    .setParameter("input", accountNumber)
+                    .setParameter("input2", localDate)
+                    .setParameter("input3", LocalDate.now());
             existEntities = typedQuery.getResultList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return Optional.empty();
         }
         return Optional.ofNullable(existEntities);
     }

@@ -24,6 +24,7 @@ public class Validation {
                 CustomerMenu customerMenu = new CustomerMenu();
                 customerMenu.showMenu(customer);
             });
+            System.out.println("Wrong information");
         }
     }
 
