@@ -7,5 +7,5 @@ public class EmployeeRepository implements BaseRepository<Employee> {
     @Override
     public Class<Employee> getEntityClass() {
         return Employee.class;
-    }
+    } //ToDo: implement employees features
 }

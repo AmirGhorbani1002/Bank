@@ -40,6 +40,11 @@ public class CreditCardMenu {
         String number = getAccount(customer);
         customer.getAccounts().forEach(account -> {
             if (Objects.equals(account.getNumber(), number)) {
+                if(account.getWrongPassword() % 3 == 0){
+                    System.out.println("Your account has been blocked due to entering the wrong " +
+                            "password 3 times in a row. Please fix it first");
+                    return;
+                }
                 System.out.println(account.getId());
                 addAmountTransfer(account);
             }
@@ -50,6 +55,11 @@ public class CreditCardMenu {
         String number = getAccount(customer);
         customer.getAccounts().forEach(account -> {
             if (Objects.equals(account.getNumber(), number)) {
+                if(account.getWrongPassword() % 3 == 0){
+                    System.out.println("Your account has been blocked due to entering the wrong " +
+                            "password 3 times in a row. Please fix it first");
+                    return;
+                }
                 if (account.getCreditCard().getPassword() == null) {
                     System.out.println("Please create a password for your credit card first ");
                     return;
@@ -77,7 +87,15 @@ public class CreditCardMenu {
 
     private void addAmountTransfer(Account account) {
         System.out.print("Enter the amount you want to deposit to your card");
-        Double amount = scanner.nextDouble();
+        double amount;
+        while(true){
+            try {
+                amount = scanner.nextDouble();
+                break;
+            }catch (Exception e){
+                System.out.print("Wrong double. Enter again: ");
+            }
+        }
         Transaction transaction = new Transaction(account, account, amount);
         while (true){
             try {
@@ -118,17 +136,6 @@ public class CreditCardMenu {
         return false;
     }
 
-    private boolean checkPassword(Account account) {
-        account.setWrongPassword(account.getWrongPassword() + 1);
-        if (account.getWrongPassword() % 3 == 0) {
-            System.out.println("Your card has been blocked due to wrong entry three times in a row");
-            return true;
-        } else {
-            System.out.println("You entered your password incorrectly");
-        }
-        return false;
-    }
-
     private void transferToAnotherAccount(Account account, CreditCardService creditCardService, CreditCard destinationCreditCard) {
         System.out.print("Enter the amount you want to deposit to your card");
         Double amount = scanner.nextDouble();
@@ -142,6 +149,17 @@ public class CreditCardMenu {
         transactionService.saveOrUpdate(transaction);
         creditCardService.saveOrUpdate(account.getCreditCard());
         creditCardService.saveOrUpdate(destinationCreditCard);
+    }
+
+    private boolean checkPassword(Account account) {
+        account.setWrongPassword(account.getWrongPassword() + 1);
+        if (account.getWrongPassword() % 3 == 0) {
+            System.out.println("Your card has been blocked due to wrong entry three times in a row");
+            return true;
+        } else {
+            System.out.println("You entered your password incorrectly");
+        }
+        return false;
     }
 
     private void changePassword(Customer customer) {

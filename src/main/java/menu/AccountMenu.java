@@ -16,7 +16,8 @@ public class AccountMenu {
         while (true) {
             System.out.println("1- Show my accounts");
             System.out.println("2- Show my transactions");
-            System.out.println("3- Exit");
+            System.out.println("3- fix my blocked accounts");
+            System.out.println("4- Exit");
             String input = scanner.next();
             if (Objects.equals(input, "1")) {
                 customer.getAccounts().forEach(System.out::println);
@@ -33,7 +34,6 @@ public class AccountMenu {
                     }
                 }
                 TransactionService transactionService = new TransactionService();
-                //ToDO: date
                 transactionService.loadAllByDate(number, localDate).ifPresent(transactions -> {
                     if (transactions.size() == 0) {
                         System.out.println("Nothing found for this account number and date");
@@ -42,6 +42,13 @@ public class AccountMenu {
                     transactions.forEach(System.out::println);
                 });
             } else if (Objects.equals(input, "3")) {
+                customer.getAccounts().forEach(account -> {
+                    if(account.getWrongPassword() % 3 == 0){
+                        System.out.println("Your account with account number " + account.getNumber()
+                        + " is fixed now");
+                    }
+                });
+            } else if (Objects.equals(input, "4")) {
                 break;
             }
         }

@@ -14,8 +14,8 @@ public class GuessMenu {
             System.out.println("Welcome to the city banking system");
             System.out.println("Choose one of the options below");
             System.out.println("1- Customer's panel");
-            System.out.println("2- Employee's panel");
-            System.out.println("3- Exit");
+            //System.out.println("2- Employee's panel");//ToDo: implement employees features
+            System.out.println("2- Exit");
             String input = scanner.next();
             if (Objects.equals(input, "1")) {
                 System.out.println("1- Login");
@@ -31,7 +31,7 @@ public class GuessMenu {
                 } else if (Objects.equals(input, "3")) {
                     break;
                 }
-            } else if (Objects.equals(input, "3")) {
+            } else if (Objects.equals(input, "2")) {
                 break;
             }
         }

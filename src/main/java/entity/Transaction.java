@@ -3,13 +3,11 @@ package entity;
 import base.BaseEntity;
 import exception.NegativeException;
 import exception.NotEnoughException;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
@@ -35,12 +33,12 @@ public class Transaction extends BaseEntity {
         }
         originAccount
                 .getCreditCard()
-                .setAmount(this.amount + originAccount
+                .setAmount((this.amount - 600) + originAccount
                         .getCreditCard()
                         .getAmount());
     }
 
-    public void deposit() throws NegativeException { //ToDo: کارمزد
+    public void deposit() throws NegativeException {
         checkAmount();
         destinationAccount
                 .getCreditCard()
@@ -51,13 +49,13 @@ public class Transaction extends BaseEntity {
                 .getCreditCard()
                 .setAmount(originAccount
                         .getCreditCard()
-                        .getAmount() - this.amount);
+                        .getAmount() - this.amount - 600);
     }
 
     private void checkAmount() throws NegativeException {
         if (this.amount < 0) {
             throw new NegativeException();
-        } else if (this.amount > originAccount
+        } else if (this.amount + 600 > originAccount
                 .getCreditCard()
                 .getAmount()) {
             throw new NotEnoughException();
