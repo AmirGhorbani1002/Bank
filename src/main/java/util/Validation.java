@@ -1,5 +1,6 @@
 package util;
 
+import check.Check;
 import entity.Customer;
 import menu.CustomerMenu;
 import service.CustomerService;
@@ -14,7 +15,8 @@ public class Validation {
 
     public void loginMenu(String type) {
         System.out.print("Enter your national code: ");
-        String nationalCode = scanner.next();
+        Check check = new Check();
+        String nationalCode = check.checkCorrectNumberPattern(scanner.next(), 10);
         System.out.print("Enter your password: ");
         String password = scanner.next();
         if (Objects.equals(type, "Customer")) {

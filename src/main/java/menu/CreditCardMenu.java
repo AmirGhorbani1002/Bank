@@ -1,5 +1,6 @@
 package menu;
 
+import check.Check;
 import entity.Account;
 import entity.CreditCard;
 import entity.Customer;
@@ -40,7 +41,7 @@ public class CreditCardMenu {
         String number = getAccount(customer);
         customer.getAccounts().forEach(account -> {
             if (Objects.equals(account.getNumber(), number)) {
-                if(account.getWrongPassword() % 3 == 0){
+                if (account.getWrongPassword() % 3 == 0) {
                     System.out.println("Your account has been blocked due to entering the wrong " +
                             "password 3 times in a row. Please fix it first");
                     return;
@@ -55,7 +56,7 @@ public class CreditCardMenu {
         String number = getAccount(customer);
         customer.getAccounts().forEach(account -> {
             if (Objects.equals(account.getNumber(), number)) {
-                if(account.getWrongPassword() % 3 == 0){
+                if (account.getWrongPassword() % 3 == 0) {
                     System.out.println("Your account has been blocked due to entering the wrong " +
                             "password 3 times in a row. Please fix it first");
                     return;
@@ -65,7 +66,8 @@ public class CreditCardMenu {
                     return;
                 }
                 System.out.print("Enter destination card number: ");
-                String creditCardNumber = scanner.next();
+                Check check = new Check();
+                String creditCardNumber = check.checkCorrectNumberPattern(scanner.next(), 16);
                 CreditCardService creditCardService = new CreditCardService();
                 Optional<CreditCard> optionalDestinationCreditCard = creditCardService.loadByNumber(creditCardNumber);
                 optionalDestinationCreditCard.ifPresent(destinationCreditCard -> {
@@ -81,23 +83,24 @@ public class CreditCardMenu {
         System.out.println("You have this/these account/accounts. select one of them");
         customer.getAccounts().forEach(System.out::println);
         System.out.print("Enter account number: ");
-        return scanner.next();
+        Check check = new Check();
+        return check.checkCorrectNumberPattern(scanner.next(), 12);
     }
 
 
     private void addAmountTransfer(Account account) {
         System.out.print("Enter the amount you want to deposit to your card");
         double amount;
-        while(true){
+        while (true) {
             try {
                 amount = scanner.nextDouble();
                 break;
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.print("Wrong double. Enter again: ");
             }
         }
         Transaction transaction = new Transaction(account, account, amount);
-        while (true){
+        while (true) {
             try {
                 transaction.selfDeposit();
                 break;
@@ -113,11 +116,12 @@ public class CreditCardMenu {
 
     private boolean getCreditCardInformation(Account account, CreditCardService creditCardService, CreditCard destinationCreditCard) {
         System.out.print("Enter your cvv2:");
-        String cvv2 = scanner.next();
+        Check check = new Check();
+        String cvv2 = check.checkCorrectNumberPattern(scanner.next(), 5); // length is 4. see Check.java
         System.out.print("Enter your month:");
-        String month = scanner.next();
+        String month = check.checkCorrectNumberPattern(scanner.next(), 2);
         System.out.print("Enter your year:");
-        String year = scanner.next();
+        String year = check.checkCorrectNumberPattern(scanner.next(), 4);
         System.out.print("Enter your password:");
         String password = scanner.next();
         CreditCard originCreditCard = account.getCreditCard();

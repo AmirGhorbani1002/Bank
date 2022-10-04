@@ -1,5 +1,6 @@
 package menu;
 
+import check.Check;
 import entity.Customer;
 import service.TransactionService;
 
@@ -58,7 +59,9 @@ public class AccountMenu {
         System.out.println("You have this/these account/accounts. select one of them");
         customer.getAccounts().forEach(System.out::println);
         System.out.print("Enter account number: ");
-        return scanner.next();
+        String number = scanner.next();
+        Check check = new Check();
+        return check.checkCorrectNumberPattern(number, 12);
     }
 
 }

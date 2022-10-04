@@ -29,7 +29,7 @@ public class CustomerMenu {
                 String input = scanner.next();
                 if (Objects.equals(input, "1")) {
                     openAccount(customer);
-                    break;
+                    showMenu(customer);
                 } else if (Objects.equals(input, "3")) {
                     break;
                 }
@@ -69,12 +69,12 @@ public class CustomerMenu {
         String code = scanner.next();
         optionalBankBranches.ifPresent(bankBranches -> bankBranches.forEach(bankBranch -> {
             if (bankBranch.getCode().toString().equals(code)) {
-                createAccount(customer, bankBranchService, bankBranch);
+                createAccount(customer, bankBranch);
             }
         }));
     }
 
-    private void createAccount(Customer customer, BankBranchService bankBranchService, BankBranch bankBranch) {
+    private void createAccount(Customer customer, BankBranch bankBranch) {
         Account account = new Account();
         account.setCustomer(customer);
         customer.getAccounts().add(account);
