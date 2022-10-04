@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] args) {
         EntityManagerFactory emf = HibernateUtil.getEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
-        GuessMenu guessMenu = new GuessMenu();
-        guessMenu.showMenu();
+        /*GuessMenu guessMenu = new GuessMenu();
+        guessMenu.showMenu();*/
         /*BankBranch bankBranch = new BankBranch();
         bankBranch.setCode(1);
         bankBranch.setName("shahr_valiasr");
