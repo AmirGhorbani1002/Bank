@@ -25,7 +25,8 @@ public class TransactionRepository implements BaseRepository<Transaction> {
             String hql = """
                     select t
                     from Transaction t, Account a
-                    where a.number =: input and t.createDate between :input2 and :input3
+                    where (a.number =: input and (t.destinationAccount = a.id or t.originAccount = a.id))
+                    and (t.createDate between :input2 and :input3)
                     """;
             TypedQuery<Transaction> typedQuery = em
                     .createQuery(hql, getEntityClass())

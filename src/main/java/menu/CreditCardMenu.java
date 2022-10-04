@@ -41,12 +41,11 @@ public class CreditCardMenu {
         String number = getAccount(customer);
         customer.getAccounts().forEach(account -> {
             if (Objects.equals(account.getNumber(), number)) {
-                if (account.getWrongPassword() % 3 == 0) {
+                if (account.getWrongPassword() % 3 == 0 && account.getWrongPassword() != 0) {
                     System.out.println("Your account has been blocked due to entering the wrong " +
                             "password 3 times in a row. Please fix it first");
                     return;
                 }
-                System.out.println(account.getId());
                 addAmountTransfer(account);
             }
         });
@@ -56,7 +55,7 @@ public class CreditCardMenu {
         String number = getAccount(customer);
         customer.getAccounts().forEach(account -> {
             if (Objects.equals(account.getNumber(), number)) {
-                if (account.getWrongPassword() % 3 == 0) {
+                if (account.getWrongPassword() % 3 == 0 && account.getWrongPassword() != 0) {
                     System.out.println("Your account has been blocked due to entering the wrong " +
                             "password 3 times in a row. Please fix it first");
                     return;
@@ -89,7 +88,28 @@ public class CreditCardMenu {
 
 
     private void addAmountTransfer(Account account) {
-        System.out.print("Enter the amount you want to deposit to your card");
+        System.out.print("Enter the amount you want to deposit to your card: ");
+        double amount;
+        amount = validDouble();
+        Transaction transaction = new Transaction(account, account, amount);
+        while (true) {
+            try {
+                transaction.selfDeposit();
+                break;
+            } catch (NegativeException e) {
+                System.out.println(e.getMessage());
+                System.out.print("Enter again: ");
+                amount = validDouble();
+                transaction.setAmount(amount);
+            }
+        }
+        TransactionService transactionService = new TransactionService();
+        CreditCardService creditCardService = new CreditCardService();
+        transactionService.saveOrUpdate(transaction);
+        creditCardService.saveOrUpdate(account.getCreditCard());
+    }
+
+    private double validDouble() {
         double amount;
         while (true) {
             try {
@@ -99,30 +119,18 @@ public class CreditCardMenu {
                 System.out.print("Wrong double. Enter again: ");
             }
         }
-        Transaction transaction = new Transaction(account, account, amount);
-        while (true) {
-            try {
-                transaction.selfDeposit();
-                break;
-            } catch (NegativeException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        TransactionService transactionService = new TransactionService();
-        CreditCardService creditCardService = new CreditCardService();
-        transactionService.saveOrUpdate(transaction);
-        creditCardService.saveOrUpdate(account.getCreditCard());
+        return amount;
     }
 
     private boolean getCreditCardInformation(Account account, CreditCardService creditCardService, CreditCard destinationCreditCard) {
-        System.out.print("Enter your cvv2:");
+        System.out.print("Enter your cvv2: ");
         Check check = new Check();
         String cvv2 = check.checkCorrectNumberPattern(scanner.next(), 5); // length is 4. see Check.java
-        System.out.print("Enter your month:");
+        System.out.print("Enter your month: ");
         String month = check.checkCorrectNumberPattern(scanner.next(), 2);
-        System.out.print("Enter your year:");
+        System.out.print("Enter your year: ");
         String year = check.checkCorrectNumberPattern(scanner.next(), 4);
-        System.out.print("Enter your password:");
+        System.out.print("Enter your password: ");
         String password = scanner.next();
         CreditCard originCreditCard = account.getCreditCard();
         if (!Objects.equals(cvv2, originCreditCard.getCvv2().toString()) || !Objects
@@ -141,7 +149,7 @@ public class CreditCardMenu {
     }
 
     private void transferToAnotherAccount(Account account, CreditCardService creditCardService, CreditCard destinationCreditCard) {
-        System.out.print("Enter the amount you want to deposit to your card");
+        System.out.print("Enter the amount you want to deposit: ");
         Double amount = scanner.nextDouble();
         Transaction transaction = new Transaction(account, destinationCreditCard.getAccount(), amount);
         try {
@@ -157,7 +165,7 @@ public class CreditCardMenu {
 
     private boolean checkPassword(Account account) {
         account.setWrongPassword(account.getWrongPassword() + 1);
-        if (account.getWrongPassword() % 3 == 0) {
+        if (account.getWrongPassword() % 3 == 0 && account.getWrongPassword() != 0) {
             System.out.println("Your card has been blocked due to wrong entry three times in a row");
             return true;
         } else {

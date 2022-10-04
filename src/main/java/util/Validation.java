@@ -36,7 +36,8 @@ public class Validation {
         System.out.print("Enter your lastname: ");
         String lastname = scanner.next();
         System.out.print("Enter your national code: ");
-        String nationalCode = scanner.next();
+        Check check = new Check();
+        String nationalCode = check.checkCorrectNumberPattern(scanner.next(), 10);
         System.out.print("Enter your password: ");
         String password = scanner.next();
         if (Objects.equals(type, "Customer")) {

@@ -21,7 +21,7 @@ public class Check {
         while (true) {
             checkDigit = false;
             if (number.length() != length) {
-                System.out.print("Wrong " + type + " number pattern. try again: ");
+                System.out.print("Wrong " + type + " number pattern. Its size should be " + length + ". try again: ");
                 number = scanner.next();
                 continue;
             } else {

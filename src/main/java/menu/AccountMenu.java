@@ -23,36 +23,43 @@ public class AccountMenu {
             if (Objects.equals(input, "1")) {
                 customer.getAccounts().forEach(System.out::println);
             } else if (Objects.equals(input, "2")) {
-                String number = getAccount(customer);
-                System.out.print("Enter date: ");
-                LocalDate localDate;
-                while (true) {
-                    try {
-                        localDate = LocalDate.parse(scanner.next());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Wrong date input. try again");
-                    }
-                }
-                TransactionService transactionService = new TransactionService();
-                transactionService.loadAllByDate(number, localDate).ifPresent(transactions -> {
-                    if (transactions.size() == 0) {
-                        System.out.println("Nothing found for this account number and date");
-                        return;
-                    }
-                    transactions.forEach(System.out::println);
-                });
+                showTransaction(customer);
             } else if (Objects.equals(input, "3")) {
                 customer.getAccounts().forEach(account -> {
-                    if(account.getWrongPassword() % 3 == 0){
+                    if (account.getWrongPassword() % 3 == 0) {
+                        account.setWrongPassword(0);
                         System.out.println("Your account with account number " + account.getNumber()
-                        + " is fixed now");
+                                + " is fixed now");
+                        account.getCreditCard().setPassword(null);
+                        System.out.println("Please create password again");
                     }
                 });
             } else if (Objects.equals(input, "4")) {
                 break;
             }
         }
+    }
+
+    private void showTransaction(Customer customer) {
+        String number = getAccount(customer);
+        System.out.print("Enter date: ");
+        LocalDate localDate;
+        while (true) {
+            try {
+                localDate = LocalDate.parse(scanner.next());
+                break;
+            } catch (Exception e) {
+                System.out.println("Wrong date input. try again");
+            }
+        }
+        TransactionService transactionService = new TransactionService();
+        transactionService.loadAllByDate(number, localDate).ifPresent(transactions -> {
+            if (transactions.size() == 0) {
+                System.out.println("Nothing found for this account number and date");
+                return;
+            }
+            transactions.forEach(System.out::println);
+        });
     }
 
     private String getAccount(Customer customer) {

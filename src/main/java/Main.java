@@ -14,6 +14,7 @@ public class Main {
         EntityManager em = emf.createEntityManager();*/
         GuessMenu guessMenu = new GuessMenu();
         guessMenu.showMenu();
+        //ToDO: unique national code
         /*BankBranch bankBranch = new BankBranch();
         bankBranch.setCode(1);
         bankBranch.setName("shahr_valiasr");
