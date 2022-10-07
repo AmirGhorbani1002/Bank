@@ -19,4 +19,8 @@ public class CustomerService implements BaseService<Customer> {
         return ((CustomerRepository) getRepository()).loadByUsername(nationalCode, password);
     }
 
+    public Optional<Customer> checkUniqueNationalCode(String nationalCode) {
+        return ((CustomerRepository) getRepository()).checkUniqueNationalCode(nationalCode);
+    }
+
 }

@@ -3,8 +3,8 @@ package menu;
 import entity.Account;
 import entity.BankBranch;
 import entity.Customer;
-import service.AccountService;
 import service.BankBranchService;
+import service.CreditCardService;
 import service.CustomerService;
 
 import java.util.List;
@@ -30,12 +30,14 @@ public class CustomerMenu {
                 if (Objects.equals(input, "1")) {
                     openAccount(customer);
                     showMenu(customer);
+                } else if (Objects.equals(input, "2")) {
+                    changePassword(customer);
                 } else if (Objects.equals(input, "3")) {
                     break;
                 }
             }
         } else {
-            while(true){
+            while (true) {
                 System.out.println("Currently, we provide the following services to our customers");
                 System.out.println("1- Services related to your account");
                 System.out.println("2- Services related to your credit card");
@@ -43,17 +45,17 @@ public class CustomerMenu {
                 System.out.println("4- Change password");
                 System.out.println("5- Logout");
                 String input = scanner.next();
-                if(Objects.equals(input, "1")){
+                if (Objects.equals(input, "1")) {
                     AccountMenu accountMenu = new AccountMenu();
                     accountMenu.showMenu(customer);
-                } else if(Objects.equals(input, "2")){
+                } else if (Objects.equals(input, "2")) {
                     CreditCardMenu creditCardMenu = new CreditCardMenu();
                     creditCardMenu.showMenu(customer);
-                } else if(Objects.equals(input, "3")){
+                } else if (Objects.equals(input, "3")) {
                     openAccount(customer);
-                } else if(Objects.equals(input, "4")){
-                    openAccount(customer);
-                } else if(Objects.equals(input, "5")){
+                } else if (Objects.equals(input, "4")) {
+                    changePassword(customer);
+                } else if (Objects.equals(input, "5")) {
                     break;
                 }
             }
@@ -85,5 +87,19 @@ public class CustomerMenu {
         customerService.saveOrUpdate(customer);
         System.out.println("done");
     }
+
+    private void changePassword(Customer customer) {
+        System.out.print("Enter your old password: ");
+        String oldPassword = scanner.next();
+        if (Objects.equals(oldPassword, customer.getPassword())) {
+            System.out.print("Enter your new password: ");
+            customer.setPassword(scanner.next());
+            CustomerService customerService = new CustomerService();
+            customerService.saveOrUpdate(customer);
+        } else {
+            System.out.println("Wrong old password");
+        }
+    }
+
 
 }

@@ -25,15 +25,7 @@ public class AccountMenu {
             } else if (Objects.equals(input, "2")) {
                 showTransaction(customer);
             } else if (Objects.equals(input, "3")) {
-                customer.getAccounts().forEach(account -> {
-                    if (account.getWrongPassword() % 3 == 0) {
-                        account.setWrongPassword(0);
-                        System.out.println("Your account with account number " + account.getNumber()
-                                + " is fixed now");
-                        account.getCreditCard().setPassword(null);
-                        System.out.println("Please create password again");
-                    }
-                });
+                fixBlockAccounts(customer);
             } else if (Objects.equals(input, "4")) {
                 break;
             }
@@ -69,6 +61,18 @@ public class AccountMenu {
         String number = scanner.next();
         Check check = new Check();
         return check.checkCorrectNumberPattern(number, 12);
+    }
+
+    private static void fixBlockAccounts(Customer customer) {
+        customer.getAccounts().forEach(account -> {
+            if (account.getWrongPassword() % 3 == 0) {
+                account.setWrongPassword(0);
+                System.out.println("Your account with account number " + account.getNumber()
+                        + " is fixed now");
+                account.getCreditCard().setPassword(null);
+                System.out.println("Please create password again");
+            }
+        });
     }
 
 }

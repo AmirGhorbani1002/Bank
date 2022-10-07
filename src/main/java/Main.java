@@ -1,11 +1,4 @@
-import entity.BankBranch;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import menu.GuessMenu;
-import service.BankBranchService;
-import util.HibernateUtil;
-
-import java.time.LocalDate;
 
 public class Main {
 
@@ -14,7 +7,6 @@ public class Main {
         EntityManager em = emf.createEntityManager();*/
         GuessMenu guessMenu = new GuessMenu();
         guessMenu.showMenu();
-        //ToDO: unique national code
         /*BankBranch bankBranch = new BankBranch();
         bankBranch.setCode(1);
         bankBranch.setName("shahr_valiasr");

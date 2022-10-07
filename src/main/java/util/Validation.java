@@ -41,10 +41,15 @@ public class Validation {
         System.out.print("Enter your password: ");
         String password = scanner.next();
         if (Objects.equals(type, "Customer")) {
-            Customer customer = new Customer(firstname, lastname, nationalCode, password);
             CustomerService customerService = new CustomerService();
-            customerService.saveOrUpdate(customer);
+            Optional<Customer> existCustomer = customerService.checkUniqueNationalCode(nationalCode);
+            existCustomer.ifPresent(customer ->
+                    System.out.println("Customer with this national code: " + nationalCode + " is exist.")
+            );
+            if (existCustomer.isEmpty()) {
+                Customer customer = new Customer(firstname, lastname, nationalCode, password);
+                customerService.saveOrUpdate(customer);
+            }
         }
     }
-
 }

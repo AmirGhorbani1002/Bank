@@ -14,7 +14,7 @@ public class CustomerRepository implements BaseRepository<Customer> {
     }
 
     public Optional<Customer> loadByUsername(String nationalCode, String password) {
-        Customer customer = null;
+        Customer customer;
         try {
             EntityManager em = HibernateUtil
                     .getEntityManagerFactory()
@@ -25,6 +25,25 @@ public class CustomerRepository implements BaseRepository<Customer> {
             customer = em.createQuery(hql, Customer.class)
                     .setParameter("inputU", nationalCode)
                     .setParameter("inputP", password)
+                    .getSingleResult();
+        } catch (Exception e) {
+            //System.out.println(e.getMessage());
+            return Optional.empty();
+        }
+        return Optional.ofNullable(customer);
+    }
+
+    public Optional<Customer> checkUniqueNationalCode(String nationalCode) {
+        Customer customer;
+        try {
+            EntityManager em = HibernateUtil
+                    .getEntityManagerFactory()
+                    .createEntityManager();
+            String hql = """
+                        from Customer c where c.nationalCode =: input
+                    """;
+            customer = em.createQuery(hql, Customer.class)
+                    .setParameter("input", nationalCode)
                     .getSingleResult();
         } catch (Exception e) {
             //System.out.println(e.getMessage());
